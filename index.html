@@ -1,0 +1,115 @@
+<!doctype html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8"/>
+    <link rel="icon" type="image/svg+xml" href="/bookFAV.svg"/>
+    <link rel="stylesheet" href="./src/style.css"/>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+    <title>The Library</title>
+</head>
+<body>
+<header>
+    <div class="logo">
+        <div class="logoImage">
+            <img src="./src/assets/book.svg" alt="book logo"/>
+        </div>
+        <div class="logoInfo">
+            <h3>The Library</h3>
+            <span>Discover your next favorite book</span>
+        </div>
+    </div>
+    <button id="themeToggle" class="themeToggleBtn">
+        <img class="themeIcon" src="" alt="theme toggle icon"/>
+        <span class="themeTitle"></span>
+    </button>
+</header>
+<main>
+    <section class="searchSection">
+        <h2 class="title">Discover Your Next Great Read</h2>
+        <span>Search millions of books, build your personal library, and never lose track of
+            what to read next.</span>
+        <form class="searchForm">
+            <input type="search" class="searchInput" id="searchInput"
+                   placeholder="Search for books by title or author..."/>
+            <button type="submit" class="searchBtn">Search</button>
+        </form>
+    </section>
+    <div class="booksScreen">
+        <section class="books">
+            <div class="authorsFilter" data-state="closed">
+                <button type="button" class="authorsSelectButton">
+                    <span>Выберите авторов</span>
+                    <span>⌄</span>
+                </button>
+                <div class="authorsDropdown">
+                    <template id="authorTemplate">
+                        <label class="authorOption">
+                            <input type="checkbox" class="authorCheckbox">
+                            <span class="authorName"></span>
+                        </label>
+                    </template>
+                </div>
+                <div class="authorsActions">
+                    <button type="button" class="applyAuthorsFilter">
+                        Apply
+                    </button>
+                    <button type="button" class="resetAuthorsFilter">
+                        Reset
+                    </button>
+                </div>
+            </div>
+            <div class="emptyContainer"></div>
+            <ul class="booksList">
+            </ul>
+<!--            <div class="booksSentinel"></div>-->
+            <template id="cardTemplate">
+                <li class="card">
+                    <div class="cover_wrapper">
+                        <img class="card_cover" alt="card_cover" src=""/>
+                        <input type="checkbox" class="card_favorite_checkbox">
+                    </div>
+                    <div class="card_info">
+                        <span class="card_title"></span>
+                        <span class="card_authors"></span>
+                        <span class="card_year"></span>
+                    </div>
+                </li>
+            </template>
+        </section>
+        <section class="favorite">
+            <div class="favoriteBooksTitleWrapper">
+                <div class="favoriteTitleImage">
+                    <img alt="favorite" src="./src/assets/heart.svg"/>
+                </div>
+                <div class="favoriteTitleInfo">
+                    <h3>Favorite</h3>
+                    <span class="favoriteBooksCount"></span>
+                </div>
+            </div>
+            <ul class="favoriteList"></ul>
+            <template id="favoriteCardTemplate">
+                <li class="favoriteCard">
+                    <div class="favorite_cover_wrapper">
+                        <img class="favorite_card_cover" alt="card_cover" src=""/>
+                    </div>
+                    <div class="card_info">
+                        <span class="card_title"></span>
+                        <span class="card_authors"></span>
+                        <span class="card_year"></span>
+                    </div>
+                    <input type="checkbox" class="card_favorite_checkbox">
+                </li>
+            </template>
+        </section>
+
+        <template id="loaderTemplate">
+            <div class="loaderContainer">
+                <div class="loader"></div>
+            </div>
+        </template>
+    </div>
+</main>
+<footer>Powered by</footer>
+<script type="module" src="/src/main.js"></script>
+</body>
+</html>
