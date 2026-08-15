@@ -1,4 +1,7 @@
-const LIGTH_MODE = 'Light mode'
+import lightIcon from './assets/light.svg'
+import darkIcon from './assets/dark.svg'
+
+const LIGHT_MODE = 'Light mode'
 const DARK_MODE = 'Dark mode'
 
 const themeToggle = document.getElementById('themeToggle');
@@ -21,10 +24,10 @@ themeToggle.addEventListener('click', () => {
 
 function updateThemeToggleButton(theme) {
     if(theme === 'dark') {
-        themeTitle.textContent = LIGTH_MODE;
-        themeIcon.src = '../src/assets/light.svg';
+        themeTitle.textContent = LIGHT_MODE;
+        themeIcon.src = lightIcon;
     }else {
         themeTitle.textContent = DARK_MODE;
-        themeIcon.src = '../src/assets/dark.svg';
+        themeIcon.src = darkIcon;
     }
 }
