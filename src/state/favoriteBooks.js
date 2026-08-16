@@ -33,7 +33,7 @@ export function setFavoriteBooksToStorage() {
     try {
         localStorage.setItem(FAVORITES_KEY, JSON.stringify([...favoriteBooks.values()]));
     } catch (error) {
-        console.log(error);
+        console.error(error);
     }
 }
 

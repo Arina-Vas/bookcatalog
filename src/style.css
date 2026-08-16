@@ -19,6 +19,7 @@
     --secondary: #eeebe4;
     --shadow: #c4b8a8;
     --favorite: #eaf0ed;
+    --green-disabled: #9caea5;
 
     --svg-filter: brightness(0) invert(1);
 
@@ -26,7 +27,7 @@
     --font-heading: 'Playfair Display';
     --font-body: 'Source Sans 3';
 
-    --fs-title: 36px;
+    --fs-title: 24px;
     --fs-large: 18px;
     --fs-base: 16px;
     --fs-sm: 14px;
@@ -57,6 +58,7 @@
     --secondary: #302b25;
     --shadow: #0f0d0b;
     --favorite: #27332d;
+    --green-disabled: #40594d;
 
     --svg-filter: brightness(0);
 }
@@ -85,10 +87,14 @@ body {
     background-color: var(--background);
 }
 
-h2, h3 {
+h1, h2, h3 {
     font-family: var(--font-heading), serif;
     font-weight: var(--fw-semibold);
     color: var(--title);
+}
+
+h1 {
+    font-size: var(--fs-large);
 }
 
 button {
@@ -177,58 +183,109 @@ main {
     align-items: center;
     overflow: hidden;
 
-    gap: 24px;
     padding: 18px 64px;
 }
 
 /* --- search section --- */
 
 .searchSection {
-    max-width: 600px;
+    max-width: 500px;
     display: flex;
     flex-direction: column;
     align-items: center;
-    gap: 10px;
+}
 
-    span {
-        text-align: center;
-        font-size: var(--fs-large);
-    }
+.label{
+    text-align: center;
+    /*font-size: var(--fs-large);*/
 }
 
 .searchForm {
     width: 100%;
-    display: flex;
+}
+
+.searchArea {
+    width: 100%;
     justify-content: space-between;
-    align-items: center;
+    display: flex;
     gap: 10px;
+}
+
+.searchLabel {
+    position: relative;
+    width: 100%;
+    display: flex;
+    flex: 1;
+
+    cursor: pointer;
+}
+
+.searchIcon {
+    position: absolute;
+    z-index: 999;
+
+    left: 14px;
+    top: 50%;
+
+    width: 20px;
+    height: 20px;
+
+    transform: translateY(-50%);
 }
 
 input[type="search"]::-webkit-search-decoration,
 input[type="search"]::-webkit-search-cancel-button {
+    -webkit-appearance: none;
     appearance: none;
 }
 
-.searchInput {
-    flex: 1;
-    height: 40px;
-    background-color: var(--white);
-    padding: 0 16px 0 44px;
-    border-radius: 10px;
-    outline: none;
-    border: 1px solid var(--border);
-    color: var(--text);
+input[type="search"]::-webkit-search-cancel-button {
+    width: 10px;
+    height: 10px;
 
-    background-image: url("assets/search.svg");
-    background-repeat: no-repeat;
-    background-size: 20px 20px;
-    background-position: left 14px center;
+    background: url('assets/cancel.svg') center / contain no-repeat;
+
+    cursor: pointer;
 }
 
-.searchBtn {
+
+.searchInput {
+    flex: 1;
+
+    height: 40px;
+
+    background-color: var(--white);
+
+    border: 1px solid var(--border);
+    border-radius: 10px;
+
+    outline: none;
+
+    padding: 0 16px 0 44px;
+
+    color: var(--text);
+}
+
+.searchInfo {
+    font-size: var(--fs-sm);
+    color: var(--red);
+
+    display: inline-block;
+}
+
+.searchButton {
     padding: 8px 16px;
     background-color: var(--green);
 }
+
+.searchButton:disabled {
+    background-color: #647d71;
+
+    cursor: not-allowed;
+}
+
+/* --- Tabs ---- */
+
 
 /* --- BOOKS SCREEN ---*/
 
@@ -243,12 +300,26 @@ input[type="search"]::-webkit-search-cancel-button {
     gap: 10px;
 }
 
+.infoContainer {
+    margin: 10px 0;
+
+    font-weight: var(--fw-semibold);
+    color: var(--green);
+
+    overflow-wrap: anywhere
+}
+
+.error {
+    color: var(--red);
+}
+
 /* --- books section --- */
 
 .books {
+    display: flex;
+    flex-direction: column;
     min-height: 0;
     flex: 1;
-    overflow-y: auto;
 }
 
 /* --- authorsFilter --- */
@@ -263,7 +334,7 @@ input[type="search"]::-webkit-search-cancel-button {
     gap: 8px;
 }
 
-.visible{
+.visible {
     display: flex;
 }
 
@@ -276,7 +347,8 @@ input[type="search"]::-webkit-search-cancel-button {
     background-color: var(--white);
     color: var(--black);
 
-    span:last-child {
+    img {
+        width: 15px;
         transition: transform 0.2s ease;
     }
 }
@@ -294,6 +366,7 @@ input[type="search"]::-webkit-search-cancel-button {
 
     padding: 8px;
 
+    color: var(--brown);
     background-color: var(--white);
     border-radius: 5px;
 }
@@ -303,13 +376,13 @@ input[type="search"]::-webkit-search-cancel-button {
     align-items: center;
 
     gap: 8px;
-}
 
-.authorsActions button {
-    height: 40px;
-    min-width: 80px;
+    button {
+        height: 40px;
+        min-width: 80px;
 
-    border: 1px solid var(--border);
+        border: 1px solid var(--border);
+    }
 }
 
 .resetAuthorsFilter {
@@ -320,6 +393,13 @@ input[type="search"]::-webkit-search-cancel-button {
     background-color: var(--green);
 }
 
+.applyAuthorsFilter:disabled,
+.resetAuthorsFilter:disabled {
+    background-color: var(--secondary);
+    color: var(--text);
+    cursor: not-allowed;
+}
+
 .authorsFilter[data-state="closed"] .authorsDropdown {
     display: none;
 }
@@ -327,11 +407,12 @@ input[type="search"]::-webkit-search-cancel-button {
 .authorsFilter[data-state="open"] .authorsDropdown {
     display: flex;
     flex-direction: column;
-
-    .authorsSelectBtn span:last-child {
-        transform: rotate(180deg);
-    }
 }
+
+.authorsFilter[data-state="open"] .authorsSelectButton img {
+    transform: rotate(180deg);
+}
+
 
 /* --- book list --- */
 .booksList {
@@ -339,15 +420,15 @@ input[type="search"]::-webkit-search-cancel-button {
     overflow-y: auto;
 
     display: grid;
-    grid-template-columns: repeat(auto-fill, minmax(220px, 2fr));
+    grid-template-columns: repeat(auto-fill, minmax(180px, 2fr));
 
-    gap: 10px;
+    gap: 8px;
 }
 
 /* --- book card --- */
 .card {
-    width: 220px;
-    height: 400px;
+    width: 180px;
+    height: 315px;
 
     display: flex;
     justify-content: space-between;
@@ -361,7 +442,7 @@ input[type="search"]::-webkit-search-cancel-button {
 
 .cover_wrapper {
     position: relative;
-    height: 315px;
+    height: 240px;
 
     display: flex;
     justify-content: center;
@@ -397,7 +478,7 @@ input[type="search"]::-webkit-search-cancel-button {
 
     font-size: var(--fs-sm);
 
-    padding: 15px;
+    padding: 10px;
 }
 
 .card_title,
@@ -584,19 +665,15 @@ input[type="search"]::-webkit-search-cancel-button {
     }
 }
 
-.emptyContainer {
-    display: flex;
-    margin-top: 10px;
-    color: var(--green);
-}
-
-.error {
-    color: var(--red);
-}
-
 footer {
     height: 60px;
     padding: 18px 64px;
     border-top: 1px solid var(--border);
     margin-top: auto;
+
+    text-align: center;
+
+    a {
+        color: var(--green);
+    }
 }
