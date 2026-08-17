@@ -5,9 +5,16 @@
 export const debounce = (callback, delay) => {
     let timeoutId;
 
-    return (...args) => {
+    const debounced = (...args) => {
         clearTimeout(timeoutId);
 
         timeoutId = setTimeout(() => callback(...args), delay);
     }
+
+    debounced.cancel = () => {
+        clearTimeout(timeoutId);
+        timeoutId = null;
+    }
+
+    return debounced;
 }

@@ -18,7 +18,7 @@ export async function fetchBooks(value) {
         const params = new URLSearchParams({
             q: value,
             // Request only the fields needed by the app to reduce the response size.
-            fields: ['key', 'title', 'author_name', 'first_publish_year', 'cover_i'],
+            fields: 'key,title,author_name,first_publish_year,cover_i',
         });
         const response = await fetch(`${SEARCH_URL}${params}`, {signal: controller.signal});
 
@@ -40,7 +40,7 @@ export async function fetchBooks(value) {
             console.error(error);
             setStatus('error', error.message ?? String(error));
         }
-        return [];
+        return null;
     }
 }
 

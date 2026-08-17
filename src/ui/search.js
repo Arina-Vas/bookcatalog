@@ -13,6 +13,10 @@ const searchButton = document.querySelector('.searchButton');
 const searchBooks = async (value) => {
     const books = await fetchBooks(value);
 
+    if (books === null) {
+        return;
+    }
+
     setBooks(books);
 
     renderAuthors(books);
@@ -24,20 +28,20 @@ const debounceSearch = debounce(searchBooks, 500)
 export function initSearchBooks() {
     searchInput.addEventListener('input', e => {
         const searchValue = e.target.value.trim();
-        const isDeleting = e.inputType?.startsWith('delete');
-
         const {isValid, message} = validateSearchValue(searchValue);
 
         searchButton.disabled = !isValid;
         searchInfo.textContent = message;
 
-        if (!isValid || isDeleting) {
+        if (!isValid) {
+            debounceSearch.cancel();
             return;
         }
 
         debounceSearch(searchValue);
     })
 
+    // Restore the initial state when leaving an empty search field.
     searchInput.addEventListener('blur', () => {
         if (!searchInput.value.trim()) {
             searchInfo.textContent = '';
@@ -57,6 +61,7 @@ export function initSearchBooks() {
             return;
         }
 
+        debounceSearch.cancel();
         await searchBooks(value);
     })
 }
