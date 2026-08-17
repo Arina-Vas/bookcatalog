@@ -33,14 +33,6 @@ const closeAuthorsDropdown = () => {
 }
 
 export const renderAuthors = (books) => {
-    if (!books.length) {
-        authorsFilter.classList.remove('visible');
-
-        return;
-    }
-
-    authorsFilter.classList.add('visible');
-
     authorsDropdown.innerHTML = '';
 
     const authors = getAuthors(books);
