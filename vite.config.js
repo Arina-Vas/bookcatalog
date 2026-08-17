@@ -2,6 +2,7 @@ import { defineConfig } from 'vite';
 
 export default defineConfig({
     build: {
+        base: '/bookcatalog/',
         outDir: 'dist',
         emptyOutDir: true,
 
