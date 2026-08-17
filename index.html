@@ -18,12 +18,13 @@
             <span>Discover your next favorite book</span>
         </div>
     </div>
-    <button id="themeToggle" class="themeToggleBtn">
+    <button id="themeToggle" class="themeToggleBtn" aria-label="Toggle color theme">
         <img class="themeIcon" src="#" alt="theme toggle icon"/>
         <span class="themeTitle"></span>
     </button>
 </header>
 <main>
+    <!-- Search -->
     <section class="searchSection">
         <h2 class="title">Discover Your Next Great Read</h2>
         <span class="label">Search millions of books, build your personal library, and never lose track of
@@ -40,20 +41,36 @@
             <span class="searchInfo"></span>
         </form>
     </section>
-    <div class="booksScreen">
+
+    <!-- Mobile navigation -->
+    <div class="listTabs">
+        <button class="tabButton active" data-tab="books">
+            Book list
+        </button>
+        <button class="tabButton" data-tab="favorite">
+            Favorite list
+        </button>
+    </div>
+
+    <!-- Books and favorites -->
+    <div class="booksScreen" data-active-tab="books">
         <section class="books">
+
+            <!-- Authors filter -->
             <div class="authorsFilter" data-state="closed">
-                <button type="button" class="authorsSelectButton">
-                    <span>Select the authors</span>
-                    <img alt="arrow" src="./src/assets/arrow.svg"/>
-                </button>
-                <div class="authorsDropdown">
-                    <template id="authorTemplate">
-                        <label class="authorOption">
-                            <input type="checkbox" class="authorCheckbox">
-                            <span class="authorName"></span>
-                        </label>
-                    </template>
+                <div class="authorsSelect">
+                    <button type="button" class="authorsSelectButton">
+                        <span>Select the authors</span>
+                        <img alt="arrow" src="./src/assets/arrow.svg"/>
+                    </button>
+                    <div class="authorsDropdown">
+                        <template id="authorTemplate">
+                            <label class="authorOption">
+                                <input type="checkbox" class="authorCheckbox">
+                                <span class="authorName"></span>
+                            </label>
+                        </template>
+                    </div>
                 </div>
                 <div class="authorsActions">
                     <button type="button" class="applyAuthorsFilter">
@@ -64,13 +81,16 @@
                     </button>
                 </div>
             </div>
+
             <div class="infoContainer"></div>
+
+            <!-- Books list -->
             <ul class="booksList">
             </ul>
             <template id="cardTemplate">
                 <li class="card">
                     <div class="cover_wrapper">
-                        <img class="card_cover" alt="card_cover" src=""/>
+                        <img class="card_cover" alt="book cover" src=""/>
                         <input type="checkbox" class="card_favorite_checkbox" aria-label="Add to favorites">
                     </div>
                     <div class="card_info">
@@ -81,6 +101,8 @@
                 </li>
             </template>
         </section>
+
+        <!-- Favorites -->
         <section class="favorite">
             <div class="favoriteBooksTitleWrapper">
                 <div class="favoriteTitleImage">
@@ -95,7 +117,7 @@
             <template id="favoriteCardTemplate">
                 <li class="favoriteCard">
                     <div class="favorite_cover_wrapper">
-                        <img class="favorite_card_cover" alt="card_cover" src=""/>
+                        <img class="favorite_card_cover" alt="favorite book cover" src=""/>
                     </div>
                     <div class="card_info">
                         <span class="card_title"></span>
@@ -106,6 +128,8 @@
                 </li>
             </template>
         </section>
+
+        <!-- Loader -->
         <template id="loaderTemplate">
             <div class="loaderContainer">
                 <div class="loader"></div>
