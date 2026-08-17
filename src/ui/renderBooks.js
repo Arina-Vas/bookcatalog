@@ -1,8 +1,10 @@
 import {buildBookCard, buildFavoriteBookCard} from "./bookCard.js";
 import {getFavoriteBooks} from "../state/favoriteBooks.js";
 
+const booksList = document.querySelector('.booksList');
+const favoriteList = document.querySelector('.favoriteList');
+
 export function renderSearchedBooks(books) {
-    const booksList = document.querySelector('.booksList')
     booksList.innerHTML = '';
 
     books.forEach(book => {
@@ -11,14 +13,13 @@ export function renderSearchedBooks(books) {
 }
 
 export function renderFavoriteBooks() {
-    const favoriteList = document.querySelector('.favoriteList');
-
-    const favoriteBooks = getFavoriteBooks();
-    const books = [...favoriteBooks.values()];
+    const books = getFavoriteBooks();
 
     favoriteList.innerHTML = '';
-        if (books.length === 0) {
-        favoriteList.textContent = 'There no favorite books';
+
+    if (books.length === 0) {
+        favoriteList.textContent = 'No favorite books yet';
+        return;
     }
 
     books.forEach(book => {

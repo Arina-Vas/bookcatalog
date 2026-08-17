@@ -5,5 +5,5 @@ export function getBooks() {
 }
 
 export function setBooks(newBooks) {
-    books = newBooks
+    books = newBooks;
 }

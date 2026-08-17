@@ -3,6 +3,7 @@ import {renderAuthors} from "./authorFilter.js";
 import {renderSearchedBooks} from "./renderBooks.js";
 import {debounce} from "../utils/debounce.js";
 import {validateSearchValue} from "../utils/validateSearchValue.js";
+import {setBooks} from "../state/books.js";
 
 const searchInput = document.getElementById('searchInput');
 const searchInfo = document.querySelector('.searchInfo');
@@ -11,6 +12,9 @@ const searchButton = document.querySelector('.searchButton');
 
 const searchBooks = async (value) => {
     const books = await fetchBooks(value);
+
+    setBooks(books);
+
     renderAuthors(books);
     renderSearchedBooks(books);
 };

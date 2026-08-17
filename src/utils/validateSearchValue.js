@@ -1,3 +1,7 @@
+/**
+ * Validates the search input and returns the validation result.
+ */
+
 export const validateSearchValue = (value) => {
     if (!value) {
         return {isValid: false, message: "Please enter a search value"};

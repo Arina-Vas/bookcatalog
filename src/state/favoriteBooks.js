@@ -8,7 +8,7 @@ export function getFavoriteBooks() {
     return [...favoriteBooks.values()];
 }
 
-export function loadFavoriteBooks() {
+function loadFavoriteBooks() {
     try {
         const storedFavoriteBooks = localStorage.getItem(FAVORITES_KEY);
         if (!storedFavoriteBooks) {
@@ -24,15 +24,17 @@ export function loadFavoriteBooks() {
         return result;
 
     } catch (error) {
+        // Invalid localStorage data should not prevent the app from starting.
         console.error(error);
         return new Map();
     }
 }
 
-export function setFavoriteBooksToStorage() {
+function saveFavoriteBooks() {
     try {
         localStorage.setItem(FAVORITES_KEY, JSON.stringify([...favoriteBooks.values()]));
     } catch (error) {
+        // Storage errors should not break the app.
         console.error(error);
     }
 }
@@ -43,7 +45,7 @@ export function toggleFavoriteBook(book) {
     } else {
         favoriteBooks.set(book.key, book);
     }
-    setFavoriteBooksToStorage();
+    saveFavoriteBooks();
     syncFavoriteCheckboxes(book.key);
     renderFavoriteBooks();
     updateFavoriteBookCount()
@@ -53,19 +55,16 @@ export function isFavorite(bookKey) {
     return favoriteBooks.has(bookKey);
 }
 
-// ----view
+// DOM-related functions: synchronize the UI with the favorite books state.
 
-export function syncFavoriteCheckboxes(bookKey) {
-    document.querySelectorAll('.card_favorite_checkbox[data-book-key]').forEach(item => {
-        if (item.dataset.bookKey === bookKey) {
-            item.checked = favoriteBooks.has(bookKey);
-        }
-    })
+function syncFavoriteCheckboxes(bookKey) {
+    const checkbox = document.querySelector(`.card_favorite_checkbox[data-book-key="${bookKey}"]`);
+    checkbox.checked = favoriteBooks.has(bookKey);
 }
 
 export function updateFavoriteBookCount() {
     const favoriteBookCount = document.querySelector('.favoriteBooksCount');
-    const count = favoriteBooks.size ?? 0
+    const count = favoriteBooks.size;
     favoriteBookCount.textContent = count > 0
         ? `${count} ${count === 1 ? 'book' : 'books'} saved`
         : '';

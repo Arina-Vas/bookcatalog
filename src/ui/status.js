@@ -1,44 +1,37 @@
-// loading | success | error | empty
-let status = ''
-
-export function setStatus(type, message = '') {
-    status = type;
-    handleStatus(status, message);
-}
-
-function handleStatus(status, message = '') {
+// Supported statuses: idle, loading, success, error, empty.
+export function setStatus(status, message = '') {
     const infoContainer = document.querySelector('.infoContainer');
     const booksList = document.querySelector('.booksList');
 
+    infoContainer.classList.remove('error');
+    infoContainer.textContent = '';
+    booksList.innerHTML = '';
+
     switch (status) {
-        case 'loading':
-            infoContainer.classList.remove('error');
+        case 'loading': {
             const loaderTemplate = document.getElementById('loaderTemplate');
             const loader = loaderTemplate.content.firstElementChild.cloneNode(true);
-            infoContainer.textContent = '';
             infoContainer.append(loader);
-            booksList.innerHTML = '';
+        }
             break;
-        case 'success':
-            infoContainer.classList.remove('error');
+        case 'success': {
             infoContainer.textContent = `Search results for: '${message}': `;
-            booksList.innerHTML = '';
             break;
-        case 'error':
+        }
+        case 'error': {
             infoContainer.classList.add('error');
             infoContainer.textContent = message;
-            booksList.innerHTML = '';
             break;
-        case 'empty':
+        }
+        case 'empty': {
             infoContainer.classList.remove('error');
             infoContainer.textContent = `No books found for: '${message}'.`;
-            booksList.innerHTML = '';
             break;
-        default:
-            infoContainer.classList.remove('error');
-            infoContainer.textContent = '';
-            booksList.innerHTML = '';
+        }
+        case 'idle': {
+            infoContainer.textContent = 'Search for books to get started.';
             break;
+        }
     }
 }
 

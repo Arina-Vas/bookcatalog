@@ -9,19 +9,22 @@ function fillBookCard(card, book, coverSelector) {
     const year = card.querySelector('.card_year');
     const favoriteCheckbox = card.querySelector('.card_favorite_checkbox');
 
-    img.classList.remove("placeholder");
+    img.classList.remove("default");
 
     if (book.cover_i) {
-        img.src = fetchCover(book.cover_i)
+        img.src = fetchCover(book.cover_i);
     } else {
-        img.src = bookIcon
-        img.classList.add("placeholder");
+        img.src = bookIcon;
+        img.classList.add("default");
     }
 
     title.textContent = book.title;
     title.title = book.title;
-    authors.textContent = book.author_name ? `${book.author_name.join(', ')}` : 'Автор неизвестен';
-    year.textContent = book.first_publish_year ?? 'Год издания неизвестен';
+
+    const authorsList = book.author_name ? book.author_name.join(', ') : 'Author unknown';
+    authors.textContent = authorsList;
+    authors.title = authorsList;
+    year.textContent = book.first_publish_year ?? 'Publication year unknown';
     favoriteCheckbox.checked = isFavorite(book.key);
     favoriteCheckbox.dataset.bookKey = book.key;
     favoriteCheckbox.addEventListener('change', () => toggleFavoriteBook(book));

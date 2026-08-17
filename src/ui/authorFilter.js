@@ -15,17 +15,21 @@ const updateButtons = () => {
     resetFiltersButton.disabled = !isSelectedAuthor;
 }
 
-export const getAuthors = (books) => {
+const getAuthors = (books) => {
     return [...new Set(
         books.flatMap((book) => book.author_name || [])
     )];
 }
 
-export const filterByAuthors = (authors, books) => {
+const filterByAuthors = (authors, books) => {
     const booksForRender = books.filter((book) =>
         book.author_name?.some((author) => authors.includes(author)))
 
     renderSearchedBooks(booksForRender);
+}
+
+const closeAuthorsDropdown = () => {
+    authorsFilter.dataset.state = 'closed';
 }
 
 export const renderAuthors = (books) => {
@@ -55,43 +59,47 @@ export const renderAuthors = (books) => {
     updateButtons();
 }
 
-authorsDropdown.addEventListener('change', () => {
-    updateButtons()
-})
+export const initAuthors = () => {
+    // Update filter buttons when the selected authors change.
+    authorsDropdown.addEventListener('change', () => {
+        updateButtons()
+    })
 
-authorsSelectButton.addEventListener('click', () => {
-    const isOpen = authorsFilter.dataset.state === 'open';
-    authorsFilter.dataset.state = isOpen ? 'closed' : 'open';
-});
+    // Toggle the dropdown visibility.
+    authorsSelectButton.addEventListener('click', () => {
+        const isOpen = authorsFilter.dataset.state === 'open';
+        authorsFilter.dataset.state = isOpen ? 'closed' : 'open';
+    });
 
-applyFiltersButton.addEventListener('click', () => {
-    const selectedAuthors = [
-        ...document.querySelectorAll('.authorCheckbox:checked')
-    ].map(checkbox => checkbox.value);
+    // Apply the selected author filters to the current search results.
+    applyFiltersButton.addEventListener('click', () => {
+        const selectedAuthors = [
+            ...document.querySelectorAll('.authorCheckbox:checked')
+        ].map(checkbox => checkbox.value);
 
-    const books = getBooks();
+        const books = getBooks();
 
-    filterByAuthors(selectedAuthors, books);
+        filterByAuthors(selectedAuthors, books);
+        closeAuthorsDropdown();
+    })
 
-    if (authorsFilter.dataset.state === 'open') authorsFilter.dataset.state = 'closed';
-})
+    // Clear selected authors and restore the full search results.
+    resetFiltersButton.addEventListener('click', () => {
+        document.querySelectorAll('.authorCheckbox:checked')
+            .forEach(checkbox => {
+                checkbox.checked = false;
+            });
 
-resetFiltersButton.addEventListener('click', () => {
-    document.querySelectorAll('.authorCheckbox:checked')
-        .forEach(checkbox => {
-            checkbox.checked = false;
-        });
+        const books = getBooks();
 
-    const books = getBooks();
+        renderSearchedBooks(books);
+        updateButtons();
+        closeAuthorsDropdown();
+    });
 
-    renderSearchedBooks(books);
-    updateButtons();
+    // Close the dropdown when clicking outside the filter.
+    document.addEventListener('click', (e) => {
+        if (!authorsFilter.contains(e.target)) closeAuthorsDropdown();
+    });
+}
 
-    if (authorsFilter.dataset.state === 'open') authorsFilter.dataset.state = 'closed';
-});
-
-document.addEventListener('click', (e) => {
-    if (!authorsFilter.contains(e.target)) {
-        authorsFilter.dataset.state = 'closed';
-    }
-});
